@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package fani.v1;
+
+service FaniService {
+    rpc ListAlbums(ListAlbumsRequest) returns (ListAlbumsResponse) {}
+    rpc ListStaging(ListStagingRequest) returns (ListStagingResponse) {}
+    rpc MoveFiles(MoveFilesRequest) returns (MoveFilesResponse) {}
+    rpc GetMedia(GetMediaRequest) returns (GetMediaResponse) {}
+}
+
+message FileObject {
+    string name = 1;
+    map<string, string> attributes = 2;
+    optional bytes thumbnail = 3;
+}
+
+message ListAlbumsRequest {
+    repeated string albumIs = 1;
+    int32 page = 2;
+}
+
+message ListAlbumsResponse {
+    repeated FileObject files = 1;
+}
+
+message ListStagingRequest {
+    int32 page = 1;
+}
+
+message ListStagingResponse {
+    repeated FileObject files = 1;
+}
+
+message MoveFileEntry {
+    string src = 1;
+    string dst = 2;
+}
+
+message MoveFilesRequest {
+    repeated MoveFileEntry items = 1;
+}
+
+message MoveFilesResponse {
+    int32 status = 1;
+}
+
+message GetMediaRequest {
+    repeated MoveFileEntry items = 1;
+}
+
+message GetMediaResponse {
+    bytes data = 2;
+}
+
